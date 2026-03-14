@@ -2,13 +2,12 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_HUB_USER = 'satwiek'    // replace with your Docker Hub username
-        DOCKER_HUB_PASS = credentials('docker-hub-token') // Jenkins secret
+        DOCKER_HUB_USER = 'satwiek'
+        DOCKER_HUB_PASS = credentials('docker-hub-token')
     }
 
     stages {
-
-        stage('Clone Code') {
+        stage('Checkout SCM') {
             steps {
                 git branch: 'staging', url: 'https://github.com/satwiek/cicd-app.git'
             }
@@ -36,6 +35,5 @@ pipeline {
                 sh 'kubectl apply -f service.yaml'
             }
         }
-
     }
 }
